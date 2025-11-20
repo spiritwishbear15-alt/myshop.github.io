@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的商品店</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8f8f8; }
+    .product { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; background: #fff; }
+    .product label { display: block; margin-bottom: 5px; }
+    #cart { margin-top: 20px; }
+    #cart textarea { width: 100%; height: 100px; }
+    button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>我的商品店</h1>
+
+  <div id="products">
+    <div class="product">
+      <label>上衣 - 290元</label>
+      <input type="number" min="0" value="0" data-name="上衣" data-price="290"> 件
+    </div>
+    <div class="product">
+      <label>褲子 - 350元</label>
+      <input type="number" min="0" value="0" data-name="褲子" data-price="350"> 件
+    </div>
+    <div class="product">
+      <label>帽子 - 150元</label>
+      <input type="number" min="0" value="0" data-name="帽子" data-price="150"> 件
+    </div>
+  </div>
+
+  <button onclick="generateCart()">加入購物車</button>
+
+  <div id="cart">
+    <h2>購物清單</h2>
+    <textarea id="cartText" readonly></textarea>
+    <p>總金額: <span id="totalPrice">0</span> 元</p>
+  </div>
+
+  <script>
+    function generateCart() {
+      const items = document.querySelectorAll('#products input');
+      let cartText = '';
+      let total = 0;
+
+      items.forEach(item => {
+        const quantity = parseInt(item.value);
+        if(quantity > 0){
+          const name = item.dataset.name;
+          const price = parseInt(item.dataset.price);
+          cartText += `${name} x ${quantity} = ${price * quantity} 元\n`;
+          total += price * quantity;
+        }
+      });
+
+      document.getElementById('cartText').value = cartText;
+      document.getElementById('totalPrice').innerText = total;
+    }
+  </script>
+</body>
+</html>
